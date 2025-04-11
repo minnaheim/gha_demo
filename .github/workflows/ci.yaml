@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Install packages
         run: |
-          R install.packages("data.table")
+          Rscript -e  'install.packages("data.table")'
       - name: Run scripts
         run: |
           Rscript R/parse_data.R
@@ -24,5 +24,4 @@ jobs:
       # docker pull devxygmbh/r-alpine
       # docker run -it 6bebc005437b /bin/bash
       # R
-      # package_url <- ""
       # install.packages()
