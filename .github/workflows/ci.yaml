@@ -9,15 +9,27 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+  libgit2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: LibGit2 Installation
+        run: |
+          sudo apt-get install libgit2-dev
+
   build:
     runs-on: ubuntu-latest
     container:
-      image: devxygmbh/r-alpine:4-3.21
+      image: devxygmbh/r-alpine:4-3.21 # should be equivalent to: docker run -it  6bebc005437b
     steps:
       - name: Session Info
         run: |
-          sessionInfo()
+          'sessionInfo()'
       - name: Install packages
+        # attaches just tools_4.4.3
+        # when doing: 'install.packages(c("renv", "devtools"))'
+        # -> brew install libgit2
+        # -> deb: libgit2-dev (ubuntu)
+
         run: |
           'install.packages("data.table")'
       - name: Run scripts
