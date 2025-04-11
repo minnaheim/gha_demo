@@ -25,7 +25,8 @@ jobs:
         # 'install.packages(c("renv", "devtools"))'
         run: |
           R -q -e 'install.packages("pak")'
-          R -q -e 'pak::pkg_install(c("renv", "devtools"))'
+          R -q -e 'pak::pkg_install("gert")'
+          R -q -e 'install.packages(c("renv", "devtools"))'
 
       - name: Run scripts
         run: |
