@@ -25,11 +25,11 @@ jobs:
         # 'install.packages(c("renv", "devtools"))'
         run: |
           R -q -e 'install.packages("pak")'
-          R -q -e 'pak::pkg_install("gert")'
+          R -q -e 'pak::pkg_install(c("renv", "devtools"))'
 
       - name: Run scripts
         run: |
-          Rscript -e 'source("R/parse_data.R")'
+          R -e 'source("R/parse_data.R")'
 
       # docker pull devxygmbh/r-alpine
       # docker run -it 6bebc005437b /bin/bash
