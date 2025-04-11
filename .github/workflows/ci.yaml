@@ -14,9 +14,12 @@ jobs:
     container:
       image: devxygmbh/r-alpine:4-3.21
     steps:
+      - name: Session Info
+        run: |
+          'sessionInfo()'
       - name: Install packages
         run: |
-          'sessionInfo(); install.packages("data.table")'
+          'install.packages("data.table")'
       - name: Run scripts
         run: |
           R/parse_data.R
