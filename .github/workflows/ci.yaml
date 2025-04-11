@@ -1,6 +1,6 @@
 name: Continuous Integration
 
-on: [push]
+on: workflow_dispatch
 
 jobs:
   checkout:
@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Install packages
         run: |
-          install.packages("data.table")
+          Rscript -e 'install.packages("data.table")'
       - name: Run scripts
         run: |
           R/parse_data.R
