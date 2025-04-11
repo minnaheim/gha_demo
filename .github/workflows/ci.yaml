@@ -13,9 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: devxygmbh/r-alpine:4-3.21
-
-  dependencies:
-    runs-on: ubuntu-latest
     steps:
       - name: Install packages
         run: |
