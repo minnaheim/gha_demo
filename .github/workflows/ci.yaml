@@ -24,8 +24,8 @@ jobs:
         # -> deb: libgit2-dev (ubuntu)
         # 'install.packages(c("renv", "devtools"))'
         run: |
-          'install.packages("pak")'
-          'pak::pkg_install("gert")'
+          R -q -e 'install.packages("pak")'
+          R -q -e 'pak::pkg_install("gert")'
 
       - name: Run scripts
         run: |
