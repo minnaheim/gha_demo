@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Session Info
         run: |
-          'sessionInfo()'
+          sessionInfo()
       - name: Install packages
         run: |
           'install.packages("data.table")'
