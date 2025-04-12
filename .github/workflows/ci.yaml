@@ -18,29 +18,11 @@ jobs:
       #   run: |
       #     'sessionInfo()'
       - name: Install packages
-        # attaches just tools_4.4.3
-        # when doing: 'install.packages(c("renv", "devtools"))'
-        # -> brew install libgit2
-        # -> deb: libgit2-dev (ubuntu)
-        # 'install.packages(c("renv", "devtools"))'
         run: |
           R -q -e 'install.packages("pak")'
           R -q -e 'pak::pkg_install("gert")'
-          R -q -e 'install.packages(c("renv", "devtools"))'
+          R -q -e 'pak::pkg_install("devtools")'
 
       - name: Run scripts
         run: |
-          R -e 'source("R/parse_data.R")'
-
-      # docker pull devxygmbh/r-alpine
-      # docker run -it 6bebc005437b /bin/bash
-      # R
-      # install.packages()
-
-  # libgit2:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: LibGit2 Installation
-  #       run: |
-  #         apk update
-  #         apk add libgit2
+          R -q -e 'source("gha_demo/R/parse_data.R")'
