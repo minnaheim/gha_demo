@@ -24,11 +24,12 @@ jobs:
         run: |
           R -q -e 'sessionInfo()'
       - name: Install packages
+        # R -q -e 'pak::pkg_install("gert")' -> not needed if devtools works
         run: |
           R -q -e 'install.packages("pak")'
-          R -q -e 'pak::pkg_install("gert")'
           R -q -e 'pak::pkg_install("devtools")'
 
       - name: Run scripts
         run: |
+          R -q -e 'getwd()'
           R -q -e 'source("gha_demo/R/parse_data.R")'
