@@ -8,16 +8,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Install system dependencies
-        run: |
-          apk update
-          apk add --no-cache harfbuzz-dev fribidi-dev freetype-dev libpng-dev glib-dev pkgconf
 
   build:
     runs-on: ubuntu-latest
     container:
       image: devxygmbh/r-alpine:4-3.21 # should be equivalent to: docker run -it  6bebc005437b
     steps:
+      - name: Install system dependencies
+        # TODO: improve this: check which dependencies need to be included!!! from Actions error
+        # fribidi-dev freetype-dev libpng-dev glib-dev pkgconf
+        run: |
+          apk update
+          apk add harfbuzz
       - name: Session Info
         run: |
           R -q -e 'sessionInfo()'
