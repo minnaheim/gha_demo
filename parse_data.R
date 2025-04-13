@@ -1,2 +1,2 @@
 library(data.table)
-data.table(iris)
+head(data.table(iris))

@@ -1,37 +1,24 @@
 name: Continuous Integration
 
-on: workflow_dispatch
+on: [push]
 
 jobs:
   checkout:
     runs-on: ubuntu-latest
     container:
-      image: devxygmbh/r-alpine:4-3.21 # should be equivalent to: docker run -it  6bebc005437b
+      image: devxygmbh/r-alpine:4-3.21
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Install system dependencies
-        # TODO: improve this: check which dependencies need to be included!!! from Actions error
-        # fribidi-dev freetype-dev libpng-dev glib-dev pkgconf
         run: |
           apk update
           apk add harfbuzz-dev fribidi-dev
-      - name: Session Info blah
-        run: |
-          R -q -e 'sessionInfo()'
-      # - name: Setup tmate session
-      #   uses: mxschmitt/action-tmate@v3
       - name: Install packages
-        # R -q -e 'pak::pkg_install("gert")' -> not needed if devtools works
         run: |
           R -q -e 'install.packages("pak")'
           R -q -e 'pak::pkg_install("devtools")'
           R -q -e 'pak::pkg_install("data.table")'
-      - name: Session Info 2
-        run: |
-          R -q -e 'sessionInfo()'
-
       - name: Run scripts
         run: |
-          R -q -e 'getwd()'
           R -q -e 'source("parse_data.R")'
