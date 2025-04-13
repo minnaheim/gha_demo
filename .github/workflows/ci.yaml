@@ -30,6 +30,7 @@ jobs:
         run: |
           R -q -e 'install.packages("pak")'
           R -q -e 'pak::pkg_install("devtools")'
+          R -q -e 'pak::pkg_install("data.table")'
       - name: Session Info 2
         run: |
           R -q -e 'sessionInfo()'
@@ -37,4 +38,4 @@ jobs:
       - name: Run scripts
         run: |
           R -q -e 'getwd()'
-          R -q -e 'source("R/parse_data.R")'
+          R -q -e 'source("parse_data.R")'
