@@ -23,6 +23,8 @@ jobs:
       - name: Session Info
         run: |
           R -q -e 'sessionInfo()'
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
       - name: Install packages
         # R -q -e 'pak::pkg_install("gert")' -> not needed if devtools works
         run: |
