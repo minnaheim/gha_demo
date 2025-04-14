@@ -21,8 +21,9 @@ jobs:
       - name: Install packages
         run: |
           R -q -e 'install.packages("pak")'
-          R -q -e 'pak::pkg_install("devtools")'
           R -q -e 'pak::pkg_install("data.table")'
+          R -q -e 'pak::pkg_install("remotes")'
+          R -q -e 'pak::pkg_install("gert")'
       - name: Run scripts
         run: |
           R -q -e 'source("parse_data.R")'
