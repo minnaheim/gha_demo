@@ -7,6 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: devxygmbh/r-alpine:4-3.21
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -16,7 +17,7 @@ jobs:
           apk add harfbuzz-dev fribidi-dev
       - name: Install packages
         run: |
-          R -q -e 'install.packages("pak")'
+          R -q -e 'install.packages("pak", repos = "https://cran.devxy.io/arm64/alpine321/latest")'
           R -q -e 'pak::pkg_install("devtools")'
           R -q -e 'pak::pkg_install("data.table")'
       - name: Run scripts
