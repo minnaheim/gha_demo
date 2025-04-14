@@ -17,7 +17,7 @@ jobs:
           apk add harfbuzz-dev fribidi-dev
       - name: Install package - pak
         run: |
-          R -q -e 'install.packages("pak")'
+          R -q -e 'install.packages("pak", repos = "https://cran.devxy.io/arm64/alpine321/latest", type = "binary")'
       - name: pak install package - devtools
         run: |
           R -q -e 'pak::pkg_install("devtools")'
