@@ -3,8 +3,8 @@ name: Continuous Integration
 on: [push]
 
 jobs:
-  checkout:
-    runs-on: ubuntu-latest-arm64
+  setup:
+    runs-on: ubuntu-24.04-arm
     container:
       image: devxygmbh/r-alpine:4-3.21
 
@@ -15,10 +15,12 @@ jobs:
         run: |
           apk update
           apk add harfbuzz-dev fribidi-dev
+      - name: Set Repo
+        run: |
+          R -e 'options("repos")'
       - name: Install packages
         run: |
-          R -q -e 'install.packages("pak", repos = "https://cran.devxy.io/arm64/alpine321/latest")'
-          R -q -e 'pak::pak_update()'
+          R -q -e 'install.packages("pak")'
           R -q -e 'pak::pkg_install("devtools")'
           R -q -e 'pak::pkg_install("data.table")'
       - name: Run scripts
