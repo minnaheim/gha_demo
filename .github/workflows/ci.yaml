@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   checkout:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04-arm64
     container:
       image: devxygmbh/r-alpine:4-3.21
 
