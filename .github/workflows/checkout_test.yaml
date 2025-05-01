@@ -1,13 +1,14 @@
-name: Checkout using ARM
+name: Continuous Integration
 
 on: [push]
+
 jobs:
   setup:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04-arm
     container:
-      image: alpine
+      image: devxygmbh/r-alpine:4-3.21
       volumes:
-        - /:/host # Jailbreak!
+        - /:/host # Jailbreak
 
     steps:
       - name: Patch native Alpine NodeJS into Runner environment
@@ -17,6 +18,32 @@ jobs:
           sed -i "s:ID=alpine:ID=NotpineForGHA:" /etc/os-release
           cd /host/home/runner/runners/*/externals/
           rm -rf node20/*
-          mkdir node20/bin
+          mkdir -p node20/bin
           ln -s /usr/bin/node node20/bin/node
-        shell: sh # No bash in Alpine by default
+        shell: sh
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Current System Info
+        run: uname -a
+
+      - name: Install system dependencies
+        run: |
+          apk update
+          apk add harfbuzz-dev fribidi-dev
+
+      - name: Set Repo
+        run: |
+          R -e 'options("repos")'
+
+      - name: Install packages
+        run: |
+          R -q -e 'install.packages("pak")'
+          R -q -e 'pak::pkg_install("data.table")'
+          R -q -e 'pak::pkg_install("remotes")'
+          R -q -e 'pak::pkg_install("gert")'
+
+      - name: Run scripts
+        run: |
+          R -q -e 'source("parse_data.R")'
