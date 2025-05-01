@@ -6,9 +6,9 @@ jobs:
   setup:
     # self hosted is also arm64
     # runs-on: self-hosted
-    runs-on: ubuntu-22.04-arm
+    runs-on: ubuntu-22.04
     container:
-      image: docker.io/devxygmbh/r-alpine:4-3.21
+      image: devxygmbh/r-alpine:4-3.21
 
     steps:
       - name: Checkout
@@ -17,6 +17,9 @@ jobs:
         # TODO: ask chatgpt
         # TODO: github search
         uses: actions/checkout@v4
+      - name: Current System Info
+        run: |
+          uname -a
       # - name: Install system dependencies
       #   run: |
       #     apk update
