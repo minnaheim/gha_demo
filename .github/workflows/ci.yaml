@@ -5,28 +5,25 @@ on: [push]
 jobs:
   setup:
     # self hosted is also arm64
-    # runs-on: self-hosted
     runs-on: ubuntu-22.04-arm
-    # container:
-    #   image: devxygmbh/r-alpine:4-3.21
-
+    container: devxygmbh/r-alpine:4-3.21
     steps:
-      - name: Checkout
-        # alternatively: git checkout?
-        # but should work, since github pre-built actions work with arm64
-        # TODO: ask chatgpt
-        # TODO: github search
-        uses: actions/checkout@v4
+      # - name: Checkout
+      #   # alternatively: git checkout?
+      #   # but should work, since github pre-built actions work with arm64
+      #   # TODO: ask chatgpt
+      #   # TODO: github search
+      #   uses: actions/checkout@v4
       - name: Current System Info
         run: |
           uname -a
-      # - name: Install system dependencies
-      #   run: |
-      #     apk update
-      #     apk add harfbuzz-dev fribidi-dev
-      # - name: Set Repo
-      #   run: |
-      #     R -e 'options("repos")'
+      - name: Install system dependencies
+        run: |
+          apk update
+          apk add harfbuzz-dev fribidi-dev
+      - name: Set Repo
+        run: |
+          R -e 'options("repos")'
       # - name: Install packages
       #   run: |
       #     R -q -e 'install.packages("pak")'
