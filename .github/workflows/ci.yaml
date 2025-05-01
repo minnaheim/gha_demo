@@ -6,7 +6,7 @@ jobs:
   setup:
     # self hosted is also arm64
     runs-on: ubuntu-22.04-arm
-    container: devxygmbh/r-alpine:4-3.21
+    # container: devxygmbh/r-alpine:4-3.21
     steps:
       # - name: Checkout
       #   # alternatively: git checkout?
