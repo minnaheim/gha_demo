@@ -1,0 +1,22 @@
+name: Checkout using ARM
+
+on: [push]
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    container:
+      image: alpine
+      volumes:
+        - /:/host # Jailbreak!
+
+    steps:
+      - name: Patch native Alpine NodeJS into Runner environment
+        if: runner.os == 'Linux'
+        run: |
+          apk add nodejs
+          sed -i "s:ID=alpine:ID=NotpineForGHA:" /etc/os-release
+          cd /host/home/runner/runners/*/externals/
+          rm -rf node20/*
+          mkdir node20/bin
+          ln -s /usr/bin/node node20/bin/node
+        shell: sh # No bash in Alpine by default
