@@ -6,9 +6,9 @@ jobs:
   setup:
     # self hosted is also arm64
     # runs-on: self-hosted
-    runs-on: ubuntu-22.04
-    container:
-      image: devxygmbh/r-alpine:4-3.21
+    runs-on: ubuntu-22.04-arm
+    # container:
+    #   image: devxygmbh/r-alpine:4-3.21
 
     steps:
       - name: Checkout
