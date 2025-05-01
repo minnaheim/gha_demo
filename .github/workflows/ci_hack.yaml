@@ -1,6 +1,6 @@
 name: Continuous Integration
 
-on: [push]
+on: workflow_dispatch
 
 jobs:
   setup:
@@ -11,6 +11,7 @@ jobs:
         - /:/host # Jailbreak
 
     steps:
+      # https://github.com/actions/runner/issues/801#issuecomment-2394425757
       - name: Patch native Alpine NodeJS into Runner environment
         if: runner.os == 'Linux'
         run: |
