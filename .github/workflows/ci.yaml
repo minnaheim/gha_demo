@@ -1,13 +1,15 @@
 name: Continuous Integration
 
-on: [push]
+on: workflow_dispatch
 
 jobs:
   setup:
     runs-on: ubuntu-22.04-arm
     container: devxygmbh/r-alpine:4-3.21
     steps:
-      # TODO: safer solution to just checkout manually?
+      - name: Check Git CLI
+        run: |
+          git status
       - name: Manual Checkout
         run: |
           apk update
