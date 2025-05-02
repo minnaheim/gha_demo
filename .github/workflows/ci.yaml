@@ -18,7 +18,10 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Add new file
-        run: echo "Hello, world!" > hello.txt
+        run: |
+          echo "Hello, world!" > hello.txt
+          pwd
+          ls
 
       - name: Commit changes
         run: |
