@@ -3,7 +3,7 @@ name: Continuous Integration
 on: workflow_dispatch
 
 jobs:
-  setup:
+  setup_hack:
     runs-on: ubuntu-22.04-arm
     container:
       image: devxygmbh/r-alpine:4-3.21
