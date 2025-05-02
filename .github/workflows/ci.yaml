@@ -4,32 +4,31 @@ on: [push]
 
 jobs:
   setup:
-    # self hosted is also arm64
     runs-on: ubuntu-22.04-arm
-    # container: devxygmbh/r-alpine:4-3.21
+    container: devxygmbh/r-alpine:4-3.21
     steps:
-      # - name: Checkout
-      #   # alternatively: git checkout?
-      #   # but should work, since github pre-built actions work with arm64
-      #   # TODO: ask chatgpt
-      #   # TODO: github search
-      #   uses: actions/checkout@v4
+      # TODO: safer solution to just checkout manually?
+      - name: Manual Checkout
+        run: |
+          apk update
+          apk add git openssh
+          git clone --depth 1 https://github.com/minnaheim/gha_demo.git
+        # uses: actions/checkout@v4
       - name: Current System Info
         run: |
           uname -a
       - name: Install system dependencies
         run: |
-          apk update
           apk add harfbuzz-dev fribidi-dev
       - name: Set Repo
         run: |
           R -e 'options("repos")'
-      # - name: Install packages
-      #   run: |
-      #     R -q -e 'install.packages("pak")'
-      #     R -q -e 'pak::pkg_install("data.table")'
-      #     R -q -e 'pak::pkg_install("remotes")'
-      #     R -q -e 'pak::pkg_install("gert")'
-      # - name: Run scripts
-      #   run: |
-      #     R -q -e 'source("parse_data.R")'
+      - name: Install packages
+        run: |
+          R -q -e 'install.packages("pak")'
+          R -q -e 'pak::pkg_install("data.table")'
+          R -q -e 'pak::pkg_install("remotes")'
+          R -q -e 'pak::pkg_install("gert")'
+      - name: Run scripts
+        run: |
+          R -q -e 'source("parse_data.R")'
