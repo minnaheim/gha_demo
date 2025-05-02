@@ -11,21 +11,42 @@ jobs:
         run: |
           apk update
           apk add git
-          git clone --depth=1 https://github.com/minnaheim/gha_demo.git .
-      - name: Install system dependencies
+          git clone --depth=1 https://github.com/${{ github.repository }}.git .
+      - name: Configure Git
         run: |
-          apk add harfbuzz-dev fribidi-dev
-      - name: Set Repo
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Add new file
+        run: echo "Hello, world!" > hello.txt
+
+      - name: Commit changes
         run: |
-          R -e 'options("repos")'
-      - name: Install packages
-        run: |
-          R -q -e 'install.packages("pak")'
-          R -q -e 'pak::pkg_install("data.table")'
-          R -q -e 'pak::pkg_install("remotes")'
-          R -q -e 'pak::pkg_install("gert")'
-      - name: Run scripts
-        run: |
-          R -q -e 'dir()'
-          R -q -e 'source("parse_data.R")'
-    # TODO: git push, check git clone, etc. on image cli
+          git add hello.txt
+          git commit -m "Added hello.txt with greeting"
+
+      - name: Push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
+      # - name: Install system dependencies
+      #   run: |
+      #     apk add harfbuzz-dev fribidi-dev
+      # - name: Set Repo
+      #   run: |
+      #     R -e 'options("repos")'
+      # - name: Install packages
+      #   run: |
+      #     R -q -e 'install.packages("pak")'
+      #     R -q -e 'pak::pkg_install("data.table")'
+      #     R -q -e 'pak::pkg_install("remotes")'
+      #     R -q -e 'pak::pkg_install("gert")'
+      # - name: Run scripts
+      #   run: |
+      #     R -q -e 'dir()'
+      #     R -q -e 'source("R/parse_data.R")'
+      # - name: Push changes
+      #   run: |
+      #     git add -A
+      #     git commit -m ""
+      #     git push
