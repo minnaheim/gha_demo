@@ -12,7 +12,7 @@ jobs:
           apk update
           apk add git
           git clone --depth=1 https://github.com/${{ github.repository }}.git .
-          git config --global --add safe.directory pwd
+          git config --global --add safe.directory $(pwd)
       # - name: Configure Git
       #   run: |
       #     git config --global user.name "github-actions[bot]"
