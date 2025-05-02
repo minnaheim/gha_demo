@@ -31,5 +31,6 @@ jobs:
           R -q -e 'pak::pkg_install("gert")'
       - name: Run scripts
         run: |
+          R -q -e 'getwd()'
           R -q -e 'source("parse_data.R")'
     # TODO: git push, check git clone, etc. on image cli
