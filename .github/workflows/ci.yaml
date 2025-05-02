@@ -9,11 +9,11 @@ jobs:
     steps:
       - name: Check Git CLI
         run: |
+          apk add git 
           git status
       - name: Manual Checkout
         run: |
           apk update
-          apk add git openssh
           git clone --depth 1 https://github.com/minnaheim/gha_demo.git
         # uses: actions/checkout@v4
       - name: Current System Info
