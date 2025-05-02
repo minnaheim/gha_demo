@@ -12,10 +12,10 @@ jobs:
           apk update
           apk add git
           git clone --depth=1 https://github.com/${{ github.repository }}.git .
-      - name: Configure Git
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      # - name: Configure Git
+      #   run: |
+      #     git config --global user.name "github-actions[bot]"
+      #     git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Add new file
         run: |
