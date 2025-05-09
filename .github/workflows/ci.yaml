@@ -14,8 +14,6 @@ jobs:
           git clone --depth=1 https://github.com/${{ github.repository }}.git .
           # git config --global --add safe.directory $(pwd)
 
-      # TODO: get auth token from local git config OR use User from archive_init() -> username and password, so no auth needed.
-
       - name: Configure Git
         run: |
           git config --global user.name "github-actions[bot]"
@@ -40,10 +38,14 @@ jobs:
         run: |
           R -q -e 'dir()'
           R -q -e 'source("R/parse_data.R")'
-      - name: Push changes
+      - name: Commit changes
         run: |
           git add -A
           git commit -m "update data"
+
+      - name: Update Date
+        run: |
+          echo $(date -u) > update_date.txt
       - name: Push changes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
