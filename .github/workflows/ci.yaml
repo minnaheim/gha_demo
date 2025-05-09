@@ -1,4 +1,4 @@
-name: Continuous Integration
+name: CI - Manual
 
 on: workflow_dispatch
 
@@ -12,47 +12,38 @@ jobs:
           apk update
           apk add git
           git clone --depth=1 https://github.com/${{ github.repository }}.git .
-          git config --global --add safe.directory $(pwd)
+          # git config --global --add safe.directory $(pwd)
+
+      # TODO: get auth token from local git config OR use User from archive_init() -> username and password, so no auth needed.
 
       - name: Configure Git
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Add new file
+      - name: Install system dependencies
         run: |
-          echo "Hello, world!" > hello.txt
-          pwd
-          ls
-
-      - name: Commit changes
+          apk add harfbuzz-dev fribidi-dev
+      - name: Set Repo
         run: |
-          git add hello.txt
-          git commit -m "Added hello.txt with greeting"
+          R -e 'options("repos")'
+      - name: Install packages
+        run: |
+          R -q -e 'install.packages("pak")'
+          R -q -e 'pak::pkg_install("data.table")'
+          R -q -e 'pak::pkg_install("remotes")'
+          R -q -e 'pak::pkg_install("gert")'
+          R -q -e 'pak::pkg_install("kofdata")'
 
+      - name: Run scripts
+        run: |
+          R -q -e 'dir()'
+          R -q -e 'source("R/parse_data.R")'
       - name: Push changes
-        # TODO: Permission to minnaheim/gha_demo.git denied to github-actions[bot].
+        run: |
+          git add -A
+          git commit -m "update data"
+      - name: Push changes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
-      # - name: Install system dependencies
-      #   run: |
-      #     apk add harfbuzz-dev fribidi-dev
-      # - name: Set Repo
-      #   run: |
-      #     R -e 'options("repos")'
-      # - name: Install packages
-      #   run: |
-      #     R -q -e 'install.packages("pak")'
-      #     R -q -e 'pak::pkg_install("data.table")'
-      #     R -q -e 'pak::pkg_install("remotes")'
-      #     R -q -e 'pak::pkg_install("gert")'
-      # - name: Run scripts
-      #   run: |
-      #     R -q -e 'dir()'
-      #     R -q -e 'source("R/parse_data.R")'
-      # - name: Push changes
-      #   run: |
-      #     git add -A
-      #     git commit -m ""
-      #     git push
